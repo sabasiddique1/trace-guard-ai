@@ -7,6 +7,8 @@
 [![Tests](https://img.shields.io/badge/tests-333%20passing-4a7a52.svg)](#testing--evaluation)
 [![Blind holdout](https://img.shields.io/badge/blind%20holdout-38.5%25%20–%2088.9%25-5b3ef0.svg)](#the-two-numbers)
 
+![TraceGuardAI](docs/screenshots/landing.png)
+
 > **Synthetic data only.** No real patient data, no external model, no real-world action. Every "clinical" scenario is a fixture.
 
 ---
@@ -38,7 +40,7 @@ After two rounds of rebuilding, the same holdout scored **88.9%**. A second hold
 
 ![Dashboard](docs/screenshots/dashboard.png)
 
-*Counts, never an accuracy percentage — and the page says plainly that its own numbers are not the citable ones.*
+*The dashboard shows counts, never an accuracy percentage — and states in the interface itself that its own numbers are not the ones to quote.*
 
 ---
 
@@ -52,9 +54,15 @@ After two rounds of rebuilding, the same holdout scored **88.9%**. A second hold
 | 🔍 **Auditable trace** | Ten-stage execution timeline and provenance verification per run |
 | 🧪 **Mutation engine** | 91 base cases expand to 1,200+ through 17 seeded evasion mutators |
 
-![Attack simulations](docs/screenshots/attacks.png)
+---
 
-*Expected against actual, with a derived verdict. The benign control is separated deliberately — a failure there is a real user being blocked, which is as much a failure as an attack getting through.*
+## Every run is a test, and every test says what it expected
+
+![Attack simulations](docs/screenshots/attack-detail.png)
+
+Expected against actual, with a derived verdict rather than two badges to compare by eye.
+
+The **benign control is separated deliberately.** A guardrail evaluated only on attacks looks perfect right up until it blocks every real user — so a failure in that row is as much a failure as an attack getting through, and the interface says so.
 
 ---
 
@@ -90,17 +98,21 @@ Findings are **origin-aware**: the same payload in retrieved context scores high
 
 ![Trace log](docs/screenshots/traces.png)
 
-*Every stage inspectable, and the reasoning stated rather than implied: an untrusted source contributed to the score without blocking on its own, and provenance failure is recorded as a scored signal rather than an automatic block.*
+*Every stage inspectable, with the reasoning stated rather than implied: an untrusted source contributed to the score without blocking on its own, and provenance failure is recorded as a scored signal rather than an automatic block.*
 
 ---
 
-## Trust is explicit
+## Indexed is not the same as trusted
 
-Every uploaded document starts **untrusted**. Marking one trusted changes how findings from it are scored — which means it changes what the tool concludes. That toggle is deliberately consequential, because a poisoned document sitting in an otherwise trusted corpus is the attack this project was rebuilt around.
+A source can be in the index and still not be trusted to ground an answer. That case — present but not authoritative — is the ordinary one, not the edge case, and it is the attack this project was rebuilt around.
 
-A source can be in the index and still not be trusted to ground an answer. That case — present but not authoritative — is the ordinary one, not the edge case.
+![Provenance checks](docs/screenshots/provenance.png)
 
-![Documents](docs/screenshots/documents.png)
+Two questions, asked separately, deriving one verdict: is the source in the index, and is it trusted to ground an answer? A poisoned document answers **yes** to the first and **no** to the second — so the screen shows the cause rather than only the outcome.
+
+Which is why trust is explicit everywhere else too. Every uploaded document starts **untrusted**, and marking one trusted changes how findings from it are scored — meaning it changes what the tool concludes.
+
+![Documents](docs/screenshots/document.png)
 
 ---
 
